@@ -37,6 +37,13 @@
 				return htmlEscape(num);
 			}
 		}
+		
+		function showValue(newValue, sliderId) {
+		/*
+		 * Show slider value
+		 */
+			document.getElementById(sliderId).innerHTML=newValue;
+		}
 	</script>
 	
 <!--[if gte mso 9]><xml>
@@ -48,6 +55,11 @@
 <BODY>
 <p>Random String</p>
 <HR>
+<FORM>
+	<input type="range" name="keyLen" value="32" min="0" max="48" onchange="showValue(this.value, 'keyLen')" />
+	<SPAN id="keyLen">32</SPAN> Bytes <BR>
+	<INPUT type="button" value="Generate" />
+</FORM>
 <script type="text/javascript">
 	//document.write(stringGenerator());
 	psk = stringGenerator(32, "html");
