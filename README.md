@@ -5,4 +5,4 @@ This is a simple tool that I threw togeather to simplify generating random PSKs 
 
 TODO:
 - Add Refresh/Regenerate button
-- Add configurable comoplexity/length options
+- Add configurable complexity/length options
