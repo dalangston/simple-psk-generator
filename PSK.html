@@ -1,16 +1,44 @@
 <HTML xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <!--
-	Name:  PSK Generator v0.1 
+	Name:  PSK Generator v0.2 
 	Author:  David Langston
-	Date:  6 June 2016
+	Date:  8 December 2016
 
 	Description:  JavaScript tool to generate 32 char PSKs
---!>
+-->
 <HEAD>
-	<p>
-	Random Strings, fun...
-	</p>
+	<TITLE>PSK Generator</TITLE>
+	<script type="text/javascript">
+		function htmlEscape(str) {
+		/*
+		 * Convert special characters into HTML codes for display in in HTML documents
+		 *  (source: http://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript )
+		 */
+			return num.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+		}
+	
+		function stringGenerator(len=32, frmt="raw") {
+		/*
+		 * Generate random Strings that can be used as PSK when
+		 *  configuring secure network connections.
+		 */
+			num = "";
 
+			for (i = 0; i<len; i++){
+				tmp = Math.floor(Math.random() * 93) + 33;
+				num += String.fromCharCode(tmp);
+				//document.write(tmp + " : ");
+				//document.write(String.fromCharCode(tmp) + "<br>");
+			}
+			
+			if (frmt == "raw") {
+				return num;
+			} else {
+				return htmlEscape(num);
+			}
+		}
+	</script>
+	
 <!--[if gte mso 9]><xml>
 <mso:CustomDocumentProperties>
 <mso:IsMyDocuments msdt:dt="string">1</mso:IsMyDocuments>
@@ -18,18 +46,13 @@
 </xml><![endif]-->
 </HEAD>
 <BODY>
-<p><u>Random String</u></p>
+<p>Random String</p>
+<HR>
 <script type="text/javascript">
-	num = "";
-
-	for (i = 0; i<32;i++){
-		tmp = Math.floor(Math.random() * 93) + 33;
-		num += String.fromCharCode(tmp);
-		//document.write(tmp + " : ");
-		//document.write(String.fromCharCode(tmp) + "<br>");
-	}
-
-	document.write(num);
+	//document.write(stringGenerator());
+	psk = stringGenerator(32, "html");
+	document.write(psk);
+	//document.write(psk + "<BR>" + psk.length);
 </script>
 </BODY>
 </HTML>
