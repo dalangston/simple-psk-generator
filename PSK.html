@@ -1,58 +1,66 @@
 <HTML xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <!--
-	Name:  PSK Generator v0.2 
+	Name:  PSK Generator v0.3 
 	Author:  David Langston
-	Date:  8 December 2016
+	Date:  13 December 2016
 
-	Description:  JavaScript tool to generate 32 char PSKs
+	Description:  JavaScript tool to generate PSKs of variable length
 -->
 <HEAD>
-	<TITLE>PSK Generator</TITLE>
-	<script type="text/javascript">
-		function htmlEscape(str) {
-		/*
-		 * Convert special characters into HTML codes for display in in HTML documents
-		 *  (source: http://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript )
-		 */
-			return num.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-		}
-	
-		function stringGenerator(len=32, frmt="raw") {
-		/*
-		 * Generate random Strings that can be used as PSK when
-		 *  configuring secure network connections.
-		 */
-			num = "";
+<TITLE>Testing</TITLE>
+<SCRIPT type="text/javascript">
+	/*
+	 * Generate PSK strings of specified length
+	 * @param {Integer} Key Length in Bytes
+	 * @return {String} String of Random Characters of Length keyLen
+	 */
+	function keyGen(keyLen=32) {
+		num = "";
 
-			for (i = 0; i<len; i++){
-				tmp = Math.floor(Math.random() * 93) + 33;
-				num += String.fromCharCode(tmp);
-				//document.write(tmp + " : ");
-				//document.write(String.fromCharCode(tmp) + "<br>");
-			}
-			
-			if (frmt == "raw") {
-				return num;
-			} else {
-				return htmlEscape(num);
-			}
+		for (i = 0; i<keyLen;i++){
+			tmp = Math.floor(Math.random() * 93) + 33;
+			num += String.fromCharCode(tmp);
 		}
-	</script>
+		
+		return num;
+	}
 	
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:IsMyDocuments msdt:dt="string">1</mso:IsMyDocuments>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
+	/*
+	 * Convert special characters into HTML codes for display in in HTML documents
+	 *  (source: http://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript )
+	 * @param {String} String Containing Characters Needing Escaped for HTML Use
+	 * @return {String} Passed String With HTML Code Substitutions
+	 */
+	function htmlEscape(str) {
+		return num.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+	}
+	
+	/*
+	 * Place specified output in the specified HTML element
+	 * @param {String} HTML Element ID
+	 * @param {String} Output to be Placed Inside elemId
+	 */
+	function writeOutput(elemId, output) {
+		document.getElementById(elemId).innerHTML=output;
+	}
+	
+	/*
+	 * Place Generated Key In Appropriate Output Field
+	 * @param {String} HTML Element ID
+	 * @param {Integer} Length of Key to Generate in Bytes
+	 */
+	function showKey(locId, keyLen) {
+		writeOutput(locId, htmlEscape(keyGen(keyLen)));
+	}
+</SCRIPT>
 </HEAD>
-<BODY>
-<p>Random String</p>
-<HR>
-<script type="text/javascript">
-	//document.write(stringGenerator());
-	psk = stringGenerator(32, "html");
-	document.write(psk);
-	//document.write(psk + "<BR>" + psk.length);
-</script>
+<BODY onload="showKey('keyValueDiv', 32)">
+<p><u>Random String</u></p>
+<DIV id="keyValueDiv"></DIV>
+<FORM>
+	<input type="range" id="keyLen" value="32" min="8" max="64" onchange="writeOutput('keyLenSpan', this.value)" />
+	<BR>Key Length: <span id="keyLenSpan">32</span> Bytes <BR>
+	<input type="button" value="Generate" onclick="showKey('keyValueDiv', getElementById('keyLen').value)">
+</FORM>
 </BODY>
 </HTML>
