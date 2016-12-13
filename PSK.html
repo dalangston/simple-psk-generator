@@ -7,7 +7,7 @@
 	Description:  JavaScript tool to generate PSKs of variable length
 -->
 <HEAD>
-<TITLE>Testing</TITLE>
+<TITLE>PSK Generator</TITLE>
 <SCRIPT type="text/javascript">
 	/*
 	 * Generate PSK strings of specified length
@@ -55,7 +55,7 @@
 </SCRIPT>
 </HEAD>
 <BODY onload="showKey('keyValueDiv', 32)">
-<p><u>Random String</u></p>
+<p><u>Random Key String</u></p>
 <DIV id="keyValueDiv"></DIV>
 <FORM>
 	<input type="range" id="keyLen" value="32" min="8" max="64" onchange="writeOutput('keyLenSpan', this.value)" />
